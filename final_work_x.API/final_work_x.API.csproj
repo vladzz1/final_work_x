@@ -20,4 +20,9 @@
     <ProjectReference Include="..\final_work_x.DAL\final_work_x.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Storage\Share\" />
+  </ItemGroup>
+
 </Project>

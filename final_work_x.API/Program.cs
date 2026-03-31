@@ -1,3 +1,5 @@
+using final_work_x.DAL;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 Log.Logger = new LoggerConfiguration().WriteTo.Console().WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day).Enrich.FromLogContext().CreateLogger();
 
 builder.Host.UseSerilog();
+
+// Add dbcontext
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    string? connectionString = builder.Configuration.GetConnectionString("LocalDb");
+    options.UseNpgsql(connectionString);
+});
 
 // Add services to the container.
 
