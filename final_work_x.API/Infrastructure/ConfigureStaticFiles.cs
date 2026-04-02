@@ -9,7 +9,8 @@ namespace final_work_x.API.Infrastructure
         {
             var items = new List<KeyValuePair<string, string>>
             {
-                
+                new KeyValuePair<string, string>(StaticFilesSettings.ShareDir, StaticFilesSettings.ShareUrl),
+                new KeyValuePair<string, string>(StaticFilesSettings.CarsDir, StaticFilesSettings.CarUrl)
             };
 
             string storagePath = Path.Combine(env.ContentRootPath, StaticFilesSettings.StorageDir);

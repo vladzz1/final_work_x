@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <Folder Include="Initializer\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>

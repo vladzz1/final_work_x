@@ -1,3 +1,4 @@
+using final_work_x.API.Infrastructure;
 using final_work_x.DAL;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -7,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 Log.Logger = new LoggerConfiguration().WriteTo.Console().WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day).Enrich.FromLogContext().CreateLogger();
 
 builder.Host.UseSerilog();
+
+// Add repositories and services
+builder.Services.AddRepositories().AddServices();
 
 // Add dbcontext
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -18,6 +22,17 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+// CORS - дозволяємо реакту кидати запити на наш бек
+string corsName = "allowAll";
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy(corsName, cfg =>
+    {
+        cfg.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddSwaggerGen();
 
@@ -31,6 +46,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Static files
+app.UseStaticFiles(builder.Environment);
+
+// CORS - дозволяємо реакту кидати запити на наш бек
+app.UseCors(corsName);
 
 app.UseAuthorization();
 

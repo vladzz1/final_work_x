@@ -21,8 +21,6 @@ namespace final_work_x.DAL
                 e.Property(c => c.Volume).IsRequired();
 
                 e.Property(c => c.Price).IsRequired();
-
-                e.Property(c => c.Color).IsRequired();
             });
 
             builder.Entity<ManufactureEntity>(e =>

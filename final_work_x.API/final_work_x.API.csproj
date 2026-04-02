@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Storage\Cars\" />
     <Folder Include="Storage\Share\" />
   </ItemGroup>
 

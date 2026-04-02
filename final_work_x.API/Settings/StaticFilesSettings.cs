@@ -5,7 +5,6 @@
         public static string StorageDir => "Storage";
 
         public static string CarsDir => "Cars";
-        public static string ManufacturesDir => "Manufactures";
         public static string ShareDir => "Share";
 
         public static string ShareUrl => "/image";
