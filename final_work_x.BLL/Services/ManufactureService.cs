@@ -31,7 +31,7 @@ namespace final_work_x.BLL.Services
             return ServiceResponse.Success("Виробник успішно отриманий", ManufactureConverter.EntityToDto(entity));
         }
 
-        public async Task<ServiceResponse> CreateAsync(CreateManufactureDto dto, string imagesPath)
+        public async Task<ServiceResponse> CreateAsync(CreateManufactureDto dto)
         {
             var entity = ManufactureConverter.CreateDtoToEntity(dto);
 
@@ -45,7 +45,7 @@ namespace final_work_x.BLL.Services
             return ServiceResponse.Success($"Виробник '{entity.Name}' успішно доданий", ManufactureConverter.EntityToDto(entity));
         }
 
-        public async Task<ServiceResponse> UpdateAsync(UpdateManufactureDto dto, string imagesPath)
+        public async Task<ServiceResponse> UpdateAsync(UpdateManufactureDto dto)
         {
             var entity = await _manufactureRepository.GetByIdAsync(dto.Id);
 
@@ -67,7 +67,7 @@ namespace final_work_x.BLL.Services
             return ServiceResponse.Success($"Виробник '{oldName}' успішно оновлений", ManufactureConverter.EntityToDto(entity));
         }
 
-        public async Task<ServiceResponse> DeleteAsync(int id, string imagesPath)
+        public async Task<ServiceResponse> DeleteAsync(int id)
         {
             var entity = await _manufactureRepository.GetByIdAsync(id);
 

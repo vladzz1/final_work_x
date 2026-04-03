@@ -1,4 +1,5 @@
 using final_work_x.API.Infrastructure;
+using final_work_x.API.Jobs;
 using final_work_x.DAL;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -8,6 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 Log.Logger = new LoggerConfiguration().WriteTo.Console().WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day).Enrich.FromLogContext().CreateLogger();
 
 builder.Host.UseSerilog();
+
+// Quartz
+builder.Services.AddJobs(
+    (typeof(LogsCleaningJob), "0 0 0 * * ?")
+);
 
 // Add repositories and services
 builder.Services.AddRepositories().AddServices();
