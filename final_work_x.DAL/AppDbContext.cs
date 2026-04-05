@@ -5,6 +5,8 @@ namespace final_work_x.DAL
 {
     public class AppDbContext : DbContext
     {
+        public AppDbContext(DbContextOptions options) : base(options) {}
+
         public DbSet<CarEntity> Cars { get; set; }
         public DbSet<ManufactureEntity> Manufactures { get; set; }
 

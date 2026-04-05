@@ -21,6 +21,30 @@ namespace final_work_x.BLL.Services
             return ServiceResponse.Success("Автомобілі отримано", dtos);
         }
 
+        public async Task<ServiceResponse> GetAllAsync(string property, string value)
+        {
+            var dtos = await CarConverter.EntityToDtoAsync(_carRepository, property, value);
+
+            if (dtos == null || dtos.Count == 0)
+            {
+                return ServiceResponse.Error($"Автомобілів {property} {value} не існує");
+            }
+
+            return ServiceResponse.Success("Автомобілі отримано", dtos);
+        }
+
+        public async Task<ServiceResponse> GetAllAsync(double minValue, double maxValue)
+        {
+            var dtos = await CarConverter.EntityToDtoAsync(_carRepository, minValue, maxValue);
+
+            if (dtos!.Count == 0)
+            {
+                return ServiceResponse.Error($"Автомобілів з ціневим діапазоном від {minValue} до {maxValue} не існує");
+            }
+
+            return ServiceResponse.Success("Автомобілі отримано", dtos);
+        }
+
         public async Task<ServiceResponse> GetByIdAsync(int id)
         {
             var entity = await _carRepository.GetByIdAsync(id);

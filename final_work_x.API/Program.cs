@@ -1,6 +1,7 @@
 using final_work_x.API.Infrastructure;
 using final_work_x.API.Jobs;
 using final_work_x.DAL;
+using final_work_x.DAL.Initializer;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -62,5 +63,7 @@ app.UseCors(corsName);
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.SeedAsync().Wait();
 
 app.Run();

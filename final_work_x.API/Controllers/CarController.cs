@@ -35,6 +35,20 @@ namespace final_work_x.API.Controllers
             return this.GetAction(response);
         }
 
+        [HttpGet("by-property")]
+        public async Task<IActionResult> GetAsync([FromQuery] string property, [FromQuery] string value)
+        {
+            var response = await _carService.GetAllAsync(property, value);
+            return this.GetAction(response);
+        }
+
+        [HttpGet("by-price")]
+        public async Task<IActionResult> GetAsync([FromQuery] double minValue, [FromQuery] double maxValue)
+        {
+            var response = await _carService.GetAllAsync(minValue, maxValue);
+            return this.GetAction(response);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromForm] CreateCarDto dto)
         {
