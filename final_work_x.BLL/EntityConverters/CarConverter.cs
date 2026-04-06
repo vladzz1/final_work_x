@@ -45,7 +45,7 @@ namespace final_work_x.BLL.EntityConverters
 
         public async static Task<List<CarDto>?> EntityToDtoAsync(CarRepository carRepository, string property, string value)
         {
-            if (property == "Manufacture")
+            if (property.ToLower() == "manufacture")
             {
                 return await carRepository.Cars.Include(c => c.Manufacture).Select(c => new CarDto
                 {
@@ -64,7 +64,7 @@ namespace final_work_x.BLL.EntityConverters
                     } : null
                 }).Where(c => c.Manufacture!.Name == value).ToListAsync();
             }
-            else if (property == "Year")
+            else if (property.ToLower() == "year")
             {
                 return await carRepository.Cars.Include(c => c.Manufacture).Select(c => new CarDto
                 {
@@ -83,7 +83,7 @@ namespace final_work_x.BLL.EntityConverters
                     } : null
                 }).Where(c => c.Year.ToString() == value).ToListAsync();
             }
-            else if (property == "Color")
+            else if (property.ToLower() == "color")
             {
                 return await carRepository.Cars.Include(c => c.Manufacture).Select(c => new CarDto
                 {
@@ -102,7 +102,7 @@ namespace final_work_x.BLL.EntityConverters
                     } : null
                 }).Where(c => c.Color == value).ToListAsync();
             }
-            else if (property == "Volume")
+            else if (property.ToLower() == "volume")
             {
                 return await carRepository.Cars.Include(c => c.Manufacture).Select(c => new CarDto
                 {
