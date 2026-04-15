@@ -59,6 +59,8 @@ namespace final_work_x.BLL.Services
 
         public async Task<ServiceResponse> CreateAsync(CreateCarDto dto, string imagesPath)
         {
+            if (dto.ManufactureId == 0) { dto.ManufactureId = null; }
+
             var entity = CarConverter.CreateDtoToEntity(dto);
 
             if (dto.Image != null && !string.IsNullOrEmpty(imagesPath))
@@ -85,6 +87,8 @@ namespace final_work_x.BLL.Services
 
         public async Task<ServiceResponse> UpdateAsync(UpdateCarDto dto, string imagesPath)
         {
+            if (dto.ManufactureId == 0) { dto.ManufactureId = null; }
+
             var entity = await _carRepository.GetByIdAsync(dto.Id);
 
             if (entity == null)

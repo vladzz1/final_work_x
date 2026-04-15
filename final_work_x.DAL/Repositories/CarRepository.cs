@@ -1,5 +1,4 @@
 ﻿using final_work_x.DAL.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace final_work_x.DAL.Repositories
 {

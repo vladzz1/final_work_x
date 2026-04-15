@@ -1,8 +1,10 @@
 using final_work_x.API.Infrastructure;
 using final_work_x.API.Jobs;
+using final_work_x.API.Middlewares;
 using final_work_x.DAL;
 using final_work_x.DAL.Initializer;
 using Microsoft.EntityFrameworkCore;
+using Quartz;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +17,8 @@ builder.Host.UseSerilog();
 builder.Services.AddJobs(
     (typeof(LogsCleaningJob), "0 0 0 * * ?")
 );
+
+builder.Services.AddQuartzHostedService(cfg => cfg.WaitForJobsToComplete = true);
 
 // Add repositories and services
 builder.Services.AddRepositories().AddServices();
@@ -45,6 +49,9 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Custom middlewares
+app.UseMiddleware<ExceptionMiddleware>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -59,8 +66,6 @@ app.UseStaticFiles(builder.Environment);
 
 // CORS - дозволяємо реакту кидати запити на наш бек
 app.UseCors(corsName);
-
-app.UseAuthorization();
 
 app.MapControllers();
 

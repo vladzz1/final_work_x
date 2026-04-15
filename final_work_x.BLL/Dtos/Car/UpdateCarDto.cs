@@ -1,5 +1,4 @@
-﻿using final_work_x.BLL.Dtos.Manufacture;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace final_work_x.BLL.Dtos.Car
@@ -16,6 +15,6 @@ namespace final_work_x.BLL.Dtos.Car
         public string? Color { get; set; }
         public string? Description { get; set; }
         public IFormFile? Image { get; set; }
-        public int ManufactureId { get; set; }
+        public int? ManufactureId { get; set; }
     }
 }

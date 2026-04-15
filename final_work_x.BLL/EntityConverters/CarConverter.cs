@@ -19,7 +19,13 @@ namespace final_work_x.BLL.EntityConverters
                 Price = entity.Price,
                 Color = entity.Color,
                 Description = entity.Description,
-                Image = entity.Image
+                Image = entity.Image,
+                ManufactureId = entity.ManufactureId,
+                Manufacture = entity.Manufacture != null ? new ManufactureDto
+                {
+                    Id = entity.Manufacture.Id,
+                    Name = entity.Manufacture.Name
+                } : null
             };
         }
 
@@ -35,6 +41,7 @@ namespace final_work_x.BLL.EntityConverters
                 Color = c.Color,
                 Description = c.Description,
                 Image = c.Image,
+                ManufactureId = c.ManufactureId,
                 Manufacture = c.Manufacture != null ? new ManufactureDto
                 {
                     Id = c.Manufacture.Id,
@@ -47,7 +54,7 @@ namespace final_work_x.BLL.EntityConverters
         {
             if (property.ToLower() == "manufacture")
             {
-                return await carRepository.Cars.Include(c => c.Manufacture).Select(c => new CarDto
+                return await carRepository.Cars.Include(c => c.Manufacture).Where(c => c.Manufacture!.Name == value).Select(c => new CarDto
                 {
                     Id = c.Id,
                     Name = c.Name,
@@ -57,16 +64,17 @@ namespace final_work_x.BLL.EntityConverters
                     Color = c.Color,
                     Description = c.Description,
                     Image = c.Image,
+                    ManufactureId = c.ManufactureId,
                     Manufacture = c.Manufacture != null ? new ManufactureDto
                     {
                         Id = c.Manufacture.Id,
                         Name = c.Manufacture.Name
                     } : null
-                }).Where(c => c.Manufacture!.Name == value).ToListAsync();
+                }).ToListAsync();
             }
             else if (property.ToLower() == "year")
             {
-                return await carRepository.Cars.Include(c => c.Manufacture).Select(c => new CarDto
+                return await carRepository.Cars.Include(c => c.Manufacture).Where(c => c.Year.ToString() == value).Select(c => new CarDto
                 {
                     Id = c.Id,
                     Name = c.Name,
@@ -76,16 +84,17 @@ namespace final_work_x.BLL.EntityConverters
                     Color = c.Color,
                     Description = c.Description,
                     Image = c.Image,
+                    ManufactureId = c.ManufactureId,
                     Manufacture = c.Manufacture != null ? new ManufactureDto
                     {
                         Id = c.Manufacture.Id,
                         Name = c.Manufacture.Name
                     } : null
-                }).Where(c => c.Year.ToString() == value).ToListAsync();
+                }).ToListAsync();
             }
             else if (property.ToLower() == "color")
             {
-                return await carRepository.Cars.Include(c => c.Manufacture).Select(c => new CarDto
+                return await carRepository.Cars.Include(c => c.Manufacture).Where(c => c.Color == value).Select(c => new CarDto
                 {
                     Id = c.Id,
                     Name = c.Name,
@@ -95,16 +104,17 @@ namespace final_work_x.BLL.EntityConverters
                     Color = c.Color,
                     Description = c.Description,
                     Image = c.Image,
+                    ManufactureId = c.ManufactureId,
                     Manufacture = c.Manufacture != null ? new ManufactureDto
                     {
                         Id = c.Manufacture.Id,
                         Name = c.Manufacture.Name
                     } : null
-                }).Where(c => c.Color == value).ToListAsync();
+                }).ToListAsync();
             }
             else if (property.ToLower() == "volume")
             {
-                return await carRepository.Cars.Include(c => c.Manufacture).Select(c => new CarDto
+                return await carRepository.Cars.Include(c => c.Manufacture).Where(c => c.Volume.ToString() == value).Select(c => new CarDto
                 {
                     Id = c.Id,
                     Name = c.Name,
@@ -114,19 +124,20 @@ namespace final_work_x.BLL.EntityConverters
                     Color = c.Color,
                     Description = c.Description,
                     Image = c.Image,
+                    ManufactureId = c.ManufactureId,
                     Manufacture = c.Manufacture != null ? new ManufactureDto
                     {
                         Id = c.Manufacture.Id,
                         Name = c.Manufacture.Name
                     } : null
-                }).Where(c => c.Volume.ToString() == value).ToListAsync();
+                }).ToListAsync();
             }
             else{ return null; }
         }
 
         public async static Task<List<CarDto>?> EntityToDtoAsync(CarRepository carRepository, double minValue, double maxValue)
         {
-            return await carRepository.Cars.Include(c => c.Manufacture).Select(c => new CarDto
+            return await carRepository.Cars.Include(c => c.Manufacture).Where(c => c.Price >= minValue && c.Price <= maxValue).Select(c => new CarDto
             {
                 Id = c.Id,
                 Name = c.Name,
@@ -136,12 +147,13 @@ namespace final_work_x.BLL.EntityConverters
                 Color = c.Color,
                 Description = c.Description,
                 Image = c.Image,
+                ManufactureId = c.ManufactureId,
                 Manufacture = c.Manufacture != null ? new ManufactureDto
                 {
                     Id = c.Manufacture.Id,
                     Name = c.Manufacture.Name
                 } : null
-            }).Where(c => c.Price >= minValue && c.Price <= maxValue).ToListAsync();
+            }).ToListAsync();
         }
 
         public static CarEntity CreateDtoToEntity(CreateCarDto dto)
